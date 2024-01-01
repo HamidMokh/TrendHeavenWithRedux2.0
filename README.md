@@ -1,1 +1,1 @@
-# TrendTrendHaven
+# TrendHaven
