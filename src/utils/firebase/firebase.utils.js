@@ -4,7 +4,8 @@ import {
   getAuth,
   signInWithRedirect,
   signInWithPopup,
-  GoogleAuthProvider
+  GoogleAuthProvider,// firebase/auth gives us different providers other then google, such as FacebookAuthProvider, GithubAuthProvider... ext 
+  createUserWithEmailAndPassword,
 } from 'firebase/auth';
 
 import {getFirestore, 
@@ -31,12 +32,12 @@ const firebaseApp = initializeApp(firebaseConfig);
 //1  How: Calls the `initializeApp` function with the provided `firebaseConfig`.
 
 // 1 Creating a GoogleAuthProvider instance for Google Sign-In
-const provider = new GoogleAuthProvider();
+const GoogleProvider = new GoogleAuthProvider();
 // Why: Enables authentication using Google accounts.
 // How: Instantiates a new `GoogleAuthProvider`.
 
 // 1 Customizing the authentication parameters to prompt user account selection
-provider.setCustomParameters({
+GoogleProvider.setCustomParameters({
   prompt: 'select_account',
 });
 // 1 Why: Customizes the Google Sign-In process to prompt the user to select their Google account.
@@ -48,13 +49,17 @@ export const auth = getAuth();
 //1  How: Calls `getAuth` to obtain the authentication instance.
 
 //1  Exporting a function to sign in with Google using a popup
-export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+export const signInWithGooglePopup = () => signInWithPopup(auth, GoogleProvider);
 //1  Why: Allows users to sign in using their Google accounts through a popup.
 //1  How: Calls `signInWithPopup` on the authentication instance (`auth`) with the `GoogleAuthProvider` (`provider`).
-
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, GoogleProvider);
 export const db = getFirestore(); // 2 second step is initiating the fireStore db by declaring the getFireStore method, please note that google call their firebase db fireStore.
 
-export const createUserDocumenFromAuth = async (userAuth) =>{
+export const createUserDocumenFromAuth = async (userAuth,
+   additionalInformation ={}// note that this is nested and assigned an empty object value as default inside createUserDocumentFromAuth
+   // it is perfectly valid for js to initiate an object that you are passing as an argument
+   //inside of a function 
+   ) =>{
  const userDocRef = doc(db, 'users', userAuth.uid);
 
  console.log(userDocRef);
@@ -76,6 +81,7 @@ if(!userSnapshot.exists()){
                 displayName,
                 email,
                 createdAt,
+                ...additionalInformation,
             });
         
 
@@ -87,6 +93,13 @@ console.log('error creating the user', error.message);
 
 return userDocRef;
 
-}
+};
 
 //note: we are using export so we can use the db configuraion by importing it at any file in this project.
+
+ export const createAuthUserWithEmailAndPassword = async (email, password)=>{
+ if(!email||!password) return;
+
+ return await createUserWithEmailAndPassword(auth, email, password)
+
+}
