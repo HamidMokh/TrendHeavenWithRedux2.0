@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,// firebase/auth gives us different providers other then google, such as FacebookAuthProvider, GithubAuthProvider... ext 
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from 'firebase/auth';
 
 import {getFirestore, 
@@ -96,6 +97,7 @@ return userDocRef;
 };
 
 //note: we are using export so we can use the db configuraion by importing it at any file in this project.
+//The below code represent interface layers
 
  export const createAuthUserWithEmailAndPassword = async (email, password)=>{
  if(!email||!password) return;
@@ -103,3 +105,10 @@ return userDocRef;
  return await createUserWithEmailAndPassword(auth, email, password)
 
 }
+
+export const signInAuthUserWithEmailAndPassword = async (email, password)=>{
+  if(!email||!password) return;
+ 
+  return await signInWithEmailAndPassword(auth, email, password)
+ 
+ }

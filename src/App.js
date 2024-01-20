@@ -1,7 +1,7 @@
 import {Routes, Route } from 'react-router-dom';
 import Home from "./components/Routes/Home/home.component";
 import Navigation from './components/Routes/Navigation/navigation.component';
-import SignIn from './components/Routes/sign-in/sign-in.component.jsx';
+import Authentication from './components/Routes/authentication/authentication.component';
 // import CategoryItem from "./components/category-item/category-item.component";
 
 
@@ -18,7 +18,7 @@ const App = ()=> {
 
   <Route index element={ <Home />} />
   <Route path='shop' element={ <Shop /> }/>
-  <Route path='sign-in' element={ <SignIn /> }/>
+  <Route path='auth' element={ <Authentication /> }/>
   </Route> 
   </Routes>
   );
