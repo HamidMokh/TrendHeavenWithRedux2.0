@@ -22,16 +22,21 @@ import { UserContext } from '../../../contexts/user.contexts';
 // Styling is separated to keep the component's concerns modular and maintainable.
 import './navigation.styles.scss';
 
+import { signOutUser } from '../../../utils/firebase/firebase.utils'
+
 // Define the Navigation functional component
 const Navigation = () => {
   // Use the useContext hook to access the currentUser value from UserContext
   // currentUser represents the information of the currently authenticated user.
   // Accessing user information globally is crucial for components that need to adjust their behavior based on authentication status.
-  const { currentUser } = useContext(UserContext);
-
+  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const signOutHandler = async ()=>{
+    await signOutUser();
+    setCurrentUser(null);
+  }
   // Log the currentUser value to the console for debugging or information purposes
   // This logging statement is helpful during development to inspect the user data and diagnose any authentication-related issues.
-  console.log(currentUser);
+  //console.log(currentUser);
 
   // Return JSX representing the navigation structure
   return (
@@ -55,9 +60,18 @@ const Navigation = () => {
           </Link>
           
           {/* Link to the 'SIGN IN' page */}
-          <Link className='nav-link' to='/auth'>
+          <Link >
+          
+          { currentUser?
+            (<span className='nav-link' onClick={signOutHandler}>SIGNOUT</span>):(
+              <Link className='nav-link' to='/auth'>
             SIGN IN
           </Link>
+            )
+          }
+
+          </Link>
+          
         </div>
       </div>
       

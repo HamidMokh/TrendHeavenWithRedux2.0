@@ -29,11 +29,9 @@ const SignInForm = ()=>{
     const {user} = await signInWithGooglePopup();
 
    await createUserDocumenFromAuth(user);
-   console.log (user);
-};
+   console.log (user);};
 
-    const handleSubmit = async (event)=>{
-
+   const handleSubmit = async (event)=>{
         event.preventDefault();// we don't want any default behavior of the form,
         // this function is telling the compiler, we will handle all what's gonna happen in the form
         // 1. once the default behavior is prevented we need to confirm that the password matches 

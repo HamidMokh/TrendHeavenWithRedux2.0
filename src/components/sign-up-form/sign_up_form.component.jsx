@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState,useContext } from 'react'
 import './sing-up-form.styles.scss';
 import Button from '../button/button.component';
 import { createAuthUserWithEmailAndPassword , createUserDocumenFromAuth} from '../../utils/firebase/firebase.utils';
+import { UserContext } from '../../contexts/user.contexts';
 import FormInput from '../form-input/form-input.component';
 const defaultFormFields = {
     displayName: '',
@@ -11,12 +12,11 @@ const defaultFormFields = {
 }
 
 
-
 const SignUpForm = ()=>{
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {displayName, email, password, confirmPassword} = formFields;
-
-    console.log(formFields);
+    
+  const { setCurrentUser } = useContext(UserContext);
 
  const resetFormFields = ()=>{
 
@@ -39,12 +39,9 @@ const SignUpForm = ()=>{
         }
 
         try {
-            const { user } = await createAuthUserWithEmailAndPassword(
-                email, 
-                password
-                );// when you use this method please make sure to pass it email and passwor d as arguments so it can sent it to firestore to add it there.
-           
-           await createUserDocumenFromAuth(user,{ displayName });
+            const { user } = await createAuthUserWithEmailAndPassword(email,password);// when you use this method please make sure to pass it email and password as arguments so it can sent it to firestore to add it there.
+            setCurrentUser(user);
+            await createUserDocumenFromAuth(user,{ displayName });
             resetFormFields();
         } catch (e) {
             if (e.code === 'auth/email-already-in-use'){
