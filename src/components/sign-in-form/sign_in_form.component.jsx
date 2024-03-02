@@ -1,11 +1,11 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import './sing-in-form.styles.scss';
 import Button from '../button/button.component';
 import { signInWithGooglePopup ,
      createUserDocumenFromAuth ,
      signInAuthUserWithEmailAndPassword
     } from '../../utils/firebase/firebase.utils';
-import { UserContext } from '../../contexts/user.contexts';
+
 import FormInput from '../form-input/form-input.component';
 const defaultFormFields = {
     email:'',
@@ -16,8 +16,6 @@ const SignInForm = ()=>{
     const [formFields, setFormFields] = useState(defaultFormFields);
     const {email, password} = formFields;
 
-    const { setCurrentUser }= useContext(UserContext);
-    // console.log(formFields);
 
  const resetFormFields = ()=>{
 
@@ -25,22 +23,21 @@ const SignInForm = ()=>{
 
  }; 
 
- const signInWithGoogle = async ()=>{// this function signs in the user into firebase + creates a initializer document, it returns the uid + key
-    const {user} = await signInWithGooglePopup();
+ // >>>>> the function below signs in the user into firebase + creates a initializer document, it returns the uid + key
 
-   await createUserDocumenFromAuth(user);
-   console.log (user);};
+ const signInWithGoogle = async ()=>{                   
+   await signInWithGooglePopup();
+ };
 
    const handleSubmit = async (event)=>{
-        event.preventDefault();// we don't want any default behavior of the form,
+        // the below function prevent default is added because we don't want any default behavior of the form,
         // this function is telling the compiler, we will handle all what's gonna happen in the form
         // 1. once the default behavior is prevented we need to confirm that the password matches 
         // 2. check whether the uer is authenticated with email and password with firebase.
         // 3. create a user document from what the authentication result returns
-      
+        event.preventDefault();
         try {
            const {user}  =  await signInAuthUserWithEmailAndPassword(email, password); 
-           setCurrentUser(user);
            resetFormFields();
            
         } catch (e) {
@@ -56,7 +53,6 @@ const SignInForm = ()=>{
             }
         }
             
- 
     } 
 
     const handleChange = (event)=>{

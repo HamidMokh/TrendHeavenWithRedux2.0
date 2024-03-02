@@ -29,11 +29,8 @@ const Navigation = () => {
   // Use the useContext hook to access the currentUser value from UserContext
   // currentUser represents the information of the currently authenticated user.
   // Accessing user information globally is crucial for components that need to adjust their behavior based on authentication status.
-  const { currentUser, setCurrentUser } = useContext(UserContext);
-  const signOutHandler = async ()=>{
-    await signOutUser();
-    setCurrentUser(null);
-  }
+  const { currentUser} = useContext(UserContext);
+  
   // Log the currentUser value to the console for debugging or information purposes
   // This logging statement is helpful during development to inspect the user data and diagnose any authentication-related issues.
   //console.log(currentUser);
@@ -63,7 +60,7 @@ const Navigation = () => {
           <Link >
           
           { currentUser?
-            (<span className='nav-link' onClick={signOutHandler}>SIGNOUT</span>):(
+            (<span className='nav-link' onClick={signOutUser}>SIGNOUT</span>):(
               <Link className='nav-link' to='/auth'>
             SIGN IN
           </Link>
