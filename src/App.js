@@ -3,11 +3,8 @@ import Home from "./components/Routes/Home/home.component";
 import Navigation from './components/Routes/Navigation/navigation.component';
 import Authentication from './components/Routes/authentication/authentication.component';
 // import CategoryItem from "./components/category-item/category-item.component";
+import Shop from './components/shop/shop.component';
 
-
-const Shop=  ()=>{
- return <h1>I am the shop component </h1>
-}
 
 
 const App = ()=> {
