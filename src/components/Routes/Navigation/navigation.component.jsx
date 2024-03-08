@@ -11,31 +11,22 @@ import { Outlet, Link } from 'react-router-dom';
 // TrendLogo is an SVG component representing a trending arrow, used as the logo.
 // Importing it as a React component allows seamless integration into the JSX structure.
 import { ReactComponent as TrendLogo } from '../../../assets/trend-up-svgrepo-com.svg';
-
+import CartIcon from '../../cart-icon/cart-icon.component';
+import CartDropdown from '../../cart-dropdown/cart-dropdown.component';
 // Import UserContext from the user context file
 // UserContext provides a way to access the currentUser value (information of the currently authenticated user) throughout the application.
 // This enables components to react dynamically to user authentication status.
 import { UserContext } from '../../../contexts/user.contexts';
-
-// Import the styling for the navigation component
-// The './navigation.styles.scss' file contains the styles for the Navigation component.
-// Styling is separated to keep the component's concerns modular and maintainable.
+import { cartContext } from '../../../contexts/cart.context';
 import './navigation.styles.scss';
 
 import { signOutUser } from '../../../utils/firebase/firebase.utils'
 
 // Define the Navigation functional component
 const Navigation = () => {
-  // Use the useContext hook to access the currentUser value from UserContext
-  // currentUser represents the information of the currently authenticated user.
-  // Accessing user information globally is crucial for components that need to adjust their behavior based on authentication status.
+ 
   const { currentUser} = useContext(UserContext);
-  
-  // Log the currentUser value to the console for debugging or information purposes
-  // This logging statement is helpful during development to inspect the user data and diagnose any authentication-related issues.
-  //console.log(currentUser);
-
-  // Return JSX representing the navigation structure
+  const {isCartOpen} = useContext(cartContext)
   return (
     <Fragment>
       {/* Navigation container with logo */}
@@ -68,8 +59,10 @@ const Navigation = () => {
           }
 
           </Link>
-          
+          <CartIcon />
         </div>
+        {isCartOpen && <CartDropdown />}
+        {/* if isCartOpen =1  and Cart dropdown = 1 then show the last item (which is cartdropdown), if iscartopen = 0 then do not show anything this is pure javascrpt*/}
       </div>
       
       {/* Outlet component to render child components within the navigation structure */}
