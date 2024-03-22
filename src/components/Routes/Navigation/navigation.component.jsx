@@ -17,7 +17,7 @@ import CartDropdown from '../../cart-dropdown/cart-dropdown.component';
 // UserContext provides a way to access the currentUser value (information of the currently authenticated user) throughout the application.
 // This enables components to react dynamically to user authentication status.
 import { UserContext } from '../../../contexts/user.contexts';
-import { cartContext } from '../../../contexts/cart.context';
+import { CartContext } from '../../../contexts/cart.context';
 import './navigation.styles.scss';
 
 import { signOutUser } from '../../../utils/firebase/firebase.utils'
@@ -26,7 +26,7 @@ import { signOutUser } from '../../../utils/firebase/firebase.utils'
 const Navigation = () => {
  
   const { currentUser} = useContext(UserContext);
-  const {isCartOpen} = useContext(cartContext)
+  const {isCartOpen} = useContext(CartContext)
   return (
     <Fragment>
       {/* Navigation container with logo */}
