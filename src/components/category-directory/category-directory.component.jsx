@@ -1,5 +1,5 @@
-import CategoryItem from '../category-item/category-item.component';
-import './categories.styles.scss'
+import DirectoryItem from '../directory-item/directory-item.component';
+import './category.styles.scss'
 
 
 
@@ -9,7 +9,7 @@ return (
 <div className="categories-container" >
   
   {categories.map((category)=>{
-  return <CategoryItem category={category} />
+  return <DirectoryItem category={category} />
   })}
   
 </div>)
