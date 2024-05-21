@@ -18,7 +18,7 @@ import CartDropdown from '../../cart-dropdown/cart-dropdown.component';
 // This enables components to react dynamically to user authentication status.
 import { UserContext } from '../../../contexts/user.contexts';
 import { CartContext } from '../../../contexts/cart.context';
-import './navigation.styles.scss';
+import { NavigationContainer, NavLinks, NavLink, LogoContainer } from './navigation.styles';
 
 import { signOutUser } from '../../../utils/firebase/firebase.utils'
 
@@ -32,38 +32,36 @@ const Navigation = () => {
       {/* Navigation container with logo */}
       {/* The logo is wrapped in a Link component to navigate to the home page when clicked. */}
       {/* Using Link ensures a seamless transition between pages without a full page reload. */}
-      <div className='navigation'>
-        <Link className='logo-container' to='/'>
-          {/* TrendLogo component representing the logo */}
-          {/* Importing the logo as a React component allows it to be used like any other JSX element. */}
-          <TrendLogo className='logo' />
-        </Link>
-        
-        {/* Container for navigation links */}
-        {/* These links provide navigation to different sections or pages of the application. */}
-        <div className='nav-links-container'>
-          {/* Link to the 'SHOP' page */}
-          <Link className='nav-link' to='/shop'>
-            SHOP
-          </Link>
+      <NavigationContainer>
+        <LogoContainer to='/'>
           
-          {/* Link to the 'SIGN IN' page */}
+          <TrendLogo className='logo' />
+        </LogoContainer>
+        
+        
+        <NavLinks>
+         
+          <NavLink to='/shop'>
+            SHOP
+          </NavLink>
+          
+         
           <Link >
           
           { currentUser?
-            (<span className='nav-link' onClick={signOutUser}>SIGNOUT</span>):(
-              <Link className='nav-link' to='/auth'>
+            (<NavLink as='span' onClick={signOutUser}>SIGNOUT</NavLink>):( //originally this was a span with class name nav-link which i used to styled a Link component, but styled gave me the ability to use it (the link) as a span using the keyword SPAN.
+              <NavLink to='/auth'>
             SIGN IN
-          </Link>
+          </NavLink>
             )
           }
 
           </Link>
           <CartIcon />
-        </div>
+        </NavLinks>
         {isCartOpen && <CartDropdown />}
-        {/* if isCartOpen =1  and Cart dropdown = 1 then show the last item (which is cartdropdown), if iscartopen = 0 then do not show anything this is pure javascrpt*/}
-      </div>
+        {/* if isCartOpen =1  and Cart dropdown = 1 then show the last item (which is cartdropdown), if iscartopen = 0 then do not show anything this is pure javascrpt */}
+      </NavigationContainer>
       
       {/* Outlet component to render child components within the navigation structure */}
       {/* Outlet is a placeholder where child components defined in the route hierarchy will be rendered. */}

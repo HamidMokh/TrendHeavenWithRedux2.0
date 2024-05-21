@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import './sing-in-form.styles.scss';
-import Button from '../button/button.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import { signInWithGooglePopup ,
      createUserDocumenFromAuth ,
      signInAuthUserWithEmailAndPassword
@@ -23,26 +23,26 @@ const SignInForm = ()=>{
 
  }; 
 
- // >>>>> the function below signs in the user into firebase + creates a initializer document, it returns the uid + key
+                                                                                            // >>>>> the function below signs in the user into firebase + creates a initializer document, it returns the uid + key
 
  const signInWithGoogle = async ()=>{                   
    await signInWithGooglePopup();
  };
 
    const handleSubmit = async (event)=>{
-        // the below function prevent default is added because we don't want any default behavior of the form,
-        // this function is telling the compiler, we will handle all what's gonna happen in the form
-        // 1. once the default behavior is prevented we need to confirm that the password matches 
-        // 2. check whether the uer is authenticated with email and password with firebase.
-        // 3. create a user document from what the authentication result returns
+                                                                                            // the below function prevent default is added because we don't want any default behavior of the form,
+                                                                                            // this function is telling the compiler, we will handle all what's gonna happen in the form
+                                                                                            // 1. once the default behavior is prevented we need to confirm that the password matches 
+                                                                                            // 2. check whether the uer is authenticated with email and password with firebase.
+                                                                                            // 3. create a user document from what the authentication result returns
         event.preventDefault();
         try {
-           const {user}  =  await signInAuthUserWithEmailAndPassword(email, password); 
+           const { user }  =  await signInAuthUserWithEmailAndPassword(email, password); 
            resetFormFields();
            
         } catch (e) {
             switch (e.code) {
-                case 'auth/wrong-passwrd': 
+                case 'auth/wrong-password': 
                     alert('incorrect password or email');
                     break;
                 case 'auth/user-not-found':
@@ -88,8 +88,8 @@ const SignInForm = ()=>{
        
         <div className='buttons-container'>
         <Button  type='submit'>Sign in</Button>
-        <Button type = 'buttton' buttonType='google' onClick = {signInWithGoogle} >Google Sign in</Button>
-        {/* i siply put type = 'buttton' because when i signed in using buttonType='google it simply considered it as a submit button and submitted the form */}
+        <Button type = 'button' buttonType={BUTTON_TYPE_CLASSES.google} onClick = {signInWithGoogle} >Google Sign in</Button>
+                                                                                                                                            {/* i siply put type = 'buttton' because when i signed in using buttonType='google it simply considered it as a submit button and submitted the form */}
         </div>
     
         </form>
