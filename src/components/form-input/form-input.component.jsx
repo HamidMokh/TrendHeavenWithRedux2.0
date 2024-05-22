@@ -1,26 +1,16 @@
-import './form-iput.styles.scss'
-const FormInput = ({label, ...otherProps})=> {
-return(
+import { FormInputLabel, Input, Group } from './form-input.styles';
 
-
-<div className="group">
-<input className="form-input" {...otherProps}/>
-{// this is wrapped like that in order to check if the label exists in otherPropos or not, if it doesnn't 
-//no need to check, if it does, the label code will be executed and the scss will be applied into the label.
-   label && 
-    <label
-     className={`${
-        otherProps.value.length ? 'shrink' : ''
-        } form-input-label`}
-        >
-            {label}
-    </label>}
-
-    
-
-    </div>
-)
-
+const FormInput = ({ label, ...otherProps }) => {
+  return (
+    <Group>
+      <Input {...otherProps} />
+      {label && (
+        <FormInputLabel shrink={otherProps.value.length}>
+          {label}
+        </FormInputLabel>
+      )}
+    </Group>
+  );
 };
 
 export default FormInput;
