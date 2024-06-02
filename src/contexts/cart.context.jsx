@@ -119,11 +119,6 @@ const value = {
     cartCount, // Number of cart items
   };
 
-
-
-
-
-
   // Provide the CartContext with the value to its children
 return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
