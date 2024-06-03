@@ -1,5 +1,5 @@
                                                                                                       // 1 Importing necessary Firebase modules
-                                                                                                      // important note, i have created a utils files firebase.utils.js to put all of firebase functions in one place to mimimize the impact on my codebase if changes happens in firebase 
+                                                                                                      // important note, i have created a utils files firebase.utils.js to put all of firebase functions in one place to mimimize the impact on my codebase if changes happen in firebase 
 import { initializeApp } from 'firebase/app';
 import {
         getAuth,
