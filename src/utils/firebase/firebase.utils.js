@@ -1,5 +1,5 @@
                                                                                                       // 1 Importing necessary Firebase modules
-                                                                                                      // important note, i have created a utils files firebase.utils.js to put all of firebase functions in one place to mimimize the impact on my codebase if changes happens in firebase 
+                                                                                                      // important note, i have created a utils files firebase.utils.js to put all of firebase functions in one place to mimimize the impact on my codebase if changes happen in firebase 
 import { initializeApp } from 'firebase/app';
 import {
         getAuth,
@@ -21,8 +21,8 @@ import {getFirestore,
         query,
         getDocs
 } from 'firebase/firestore'                                                                          // 2 importing necessary Firebase methods to use the firestore (meanning the importing methods to use he db)  
-                                                                                                    // 1 Configuration to link this Firebase instance to the online app "trend-heaven"
-                                                                                                    // 1 Note: This configuration is obtained from the Firebase Console (https://console.firebase.google.com/project/trend-heaven/overview)
+                                                                                                 // 1 Configuration to link this Firebase instance to the online app "trend-heaven"
+                                                                                                   // 1 Note: This configuration is obtained from the Firebase Console (https://console.firebase.google.com/project/trend-heaven/overview)
 const firebaseConfig = {
       apiKey: "AIzaSyAh7n66GZCNt4T3sDT6Rfy-1iIE2snQluU",
       authDomain: "trend-heaven.firebaseapp.com",
@@ -31,7 +31,6 @@ const firebaseConfig = {
       messagingSenderId: "188851868694",
       appId: "1:188851868694:web:e1b62eef134a6479021137"
 };
-
 
                                                                                                // 1 Initialize Firebase with the provided configuration
 const firebaseApp = initializeApp(firebaseConfig);
@@ -148,17 +147,17 @@ export const getCategoriesAndDocuments = async () => {
 };
 
 
-export const createUserDocumenFromAuth = async (userAuth,
+export const createUserDocumentFromAuth = async (userAuth,
       additionalInformation ={}                                                                 //// >>>>>> note that this is nested and assigned an empty object value as default inside createUserDocumentFromAuth it is perfectly valid for js to initiate an object that you are passing as an argument inside of a function 
       ) =>{
           const userDocRef = doc(db, 'users', userAuth.uid);
 
-          console.log(userDocRef);
+          // console.log(userDocRef);
 
           const userSnapshot = await getDoc(userDocRef);
 
-          console.log(userSnapshot);
-          console.log(userSnapshot.exists());
+          // console.log(userSnapshot);
+          // console.log(userSnapshot.exists());
 
           if(!userSnapshot.exists()){
               const {displayName, email} =userAuth;

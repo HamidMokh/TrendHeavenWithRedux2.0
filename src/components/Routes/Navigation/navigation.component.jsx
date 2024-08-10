@@ -46,17 +46,16 @@ const Navigation = () => {
           </NavLink>
           
          
-          <Link >
-          
-          { currentUser?
-            (<NavLink as='span' onClick={signOutUser}>SIGNOUT</NavLink>):( //originally this was a span with class name nav-link which i used to styled a Link component, but styled gave me the ability to use it (the link) as a span using the keyword SPAN.
-              <NavLink to='/auth'>
-            SIGN IN
-          </NavLink>
-            )
-          }
-
+          <Link>
+      {
+        currentUser ? (
+        <NavLink as='span' onClick={signOutUser}>SIGN OUT</NavLink>
+        ) : (
+        <NavLink to='/auth'>SIGN IN</NavLink>
+        )
+        }
           </Link>
+
           <CartIcon />
         </NavLinks>
         {isCartOpen && <CartDropdown />}

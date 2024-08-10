@@ -1,7 +1,7 @@
 import { useState} from 'react'
 import './sing-up-form.styles.scss';
 import Button from '../button/button.component';
-import { createAuthUserWithEmailAndPassword , createUserDocumenFromAuth} from '../../utils/firebase/firebase.utils';
+import { createAuthUserWithEmailAndPassword , createUserDocumentFromAuth} from '../../utils/firebase/firebase.utils';
 
 import FormInput from '../form-input/form-input.component';
 const defaultFormFields = {
@@ -40,7 +40,7 @@ const SignUpForm = ()=>{
         try {
             const { user } = await createAuthUserWithEmailAndPassword(email,password);// when you use this method please make sure to pass it email and password as arguments so it can sent it to firestore to add it there.
             
-            await createUserDocumenFromAuth(user,{ displayName });
+            await createUserDocumentFromAuth(user,{ displayName });
             resetFormFields();
         } catch (e) {
             if (e.code === 'auth/email-already-in-use'){
