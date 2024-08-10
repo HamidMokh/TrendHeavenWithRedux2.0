@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './sing-in-form.styles.scss';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import { signInWithGooglePopup ,
-     createUserDocumenFromAuth ,
+    //  createUserDocumenFromAuth ,
      signInAuthUserWithEmailAndPassword
     } from '../../utils/firebase/firebase.utils';
 
@@ -23,18 +23,14 @@ const SignInForm = ()=>{
 
  }; 
 
-                                                                                            // >>>>> the function below signs in the user into firebase + creates a initializer document, it returns the uid + key
+                     
 
  const signInWithGoogle = async ()=>{                   
    await signInWithGooglePopup();
  };
 
    const handleSubmit = async (event)=>{
-                                                                                            // the below function prevent default is added because we don't want any default behavior of the form,
-                                                                                            // this function is telling the compiler, we will handle all what's gonna happen in the form
-                                                                                            // 1. once the default behavior is prevented we need to confirm that the password matches 
-                                                                                            // 2. check whether the uer is authenticated with email and password with firebase.
-                                                                                            // 3. create a user document from what the authentication result returns
+                                                                   
         event.preventDefault();
         try {
            const { user }  =  await signInAuthUserWithEmailAndPassword(email, password); 
