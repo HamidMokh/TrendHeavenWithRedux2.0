@@ -12,7 +12,6 @@ const navigate = useNavigate();
 const goToCheckoutHandler = ()=> navigate('/checkout');
     return(
 <CartDropdownContainer>
-
     <CartItems >
         {
             cartItems.length ? (cartItems.map(item => (
@@ -24,6 +23,7 @@ const goToCheckoutHandler = ()=> navigate('/checkout');
     </CartItems>
     <Button onClick={goToCheckoutHandler} > Go to CHECKOUT</Button>
 </CartDropdownContainer>
+
     );
 
 
