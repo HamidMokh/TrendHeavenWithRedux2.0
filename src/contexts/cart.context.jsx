@@ -1,6 +1,6 @@
 
 import { createContext, useReducer } from "react";
-
+import { createAction } from "../utils/reducer/reducer.utils";
 // Create the CartContext with initial values
 export const CartContext = createContext({
   isCartOpen: false,
@@ -102,14 +102,24 @@ export const CartProvider = ({ children }) => {
   const [{cartItems, isCartOpen, cartCount, cartTotal}, dispatch] = useReducer(CartReducer, INITIAL_STATE);
 
   const updateCartItemsReducer = (newCartItems) => {
-    const newCartCount = newCartItems.reduce((total, cartItem) =>total+ cartItem.quantity, 0);
-    const newCartTotal = newCartItems.reduce((total, cartItem) =>total + cartItem.price * cartItem.quantity, 0);
-    dispatch({type: CART_ACTION_TYPES.SET_CART_ITEMS, payload: {cartItems: newCartItems, cartTotal: newCartTotal, cartCount: newCartCount}});
-  }
+    const newCartCount = newCartItems.reduce(
+      (total, cartItem) =>total+ cartItem.quantity, 0);
+    const newCartTotal = newCartItems.reduce(
+      (total, cartItem) =>total + cartItem.price * cartItem.quantity, 0);
+    dispatch(
+      createAction(CART_ACTION_TYPES.SET_CART_ITEMS,{
+         cartItems: newCartItems,
+         cartTotal: newCartTotal, 
+         cartCount: newCartCount,
+        }));
+  };
 
 const setIsCartOpen = (bool)=>{
-  dispatch({type: CART_ACTION_TYPES.SET_IS_CART_OPEN, payload: bool})
-} ;
+  dispatch(
+    createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN,
+      bool
+    ))
+};
 
 const addItemToCart = (productToAdd) => {
     // Call addCartItem function to update cart items
