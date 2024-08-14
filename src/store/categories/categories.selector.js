@@ -1,0 +1,1 @@
+export const selectCategoriesMAP = (state)=> state.categories.categoriesMap;

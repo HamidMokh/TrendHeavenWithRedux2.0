@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {onAuthStateChangedListener, createUserDocumentFromAuth} from "./utils/firebase/firebase.utils";
+import {onAuthStateChangedListener, createUserDocumentFromAuth, getCategoriesAndDocuments} from "./utils/firebase/firebase.utils";
 import {Routes, Route } from 'react-router-dom';
 import Home from "./components/Routes/Home/home.component";
 import Navigation from './components/Routes/Navigation/navigation.component';
@@ -9,7 +9,7 @@ import Authentication from './components/Routes/authentication/authentication.co
 import Shop from './components/shop/shop.component';
 import Checkout from './components/Routes/checkout/checkout.component';
 import { setCurrentUser } from "./store/user/user.action";
-
+import { setCategoriesMap } from "./store/categories/categories.action";
 
 const App = ()=> {
   const dispatch = useDispatch();
@@ -20,9 +20,16 @@ const App = ()=> {
         }
        dispatch(setCurrentUser(user));
     })
-
     return unsubscribe
 },[]);
+
+useEffect(() => {
+  const getCategoriesMAP = async () => {
+    const categoryMap = await getCategoriesAndDocuments();
+    dispatch(setCategoriesMap(categoryMap)); // Set state after fetching data
+  };
+  getCategoriesMAP();
+}, []);
   return (
   <Routes>
   <Route path='/' element={<Navigation/>} >
