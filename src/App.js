@@ -9,7 +9,6 @@ import Authentication from './components/Routes/authentication/authentication.co
 import Shop from './components/shop/shop.component';
 import Checkout from './components/Routes/checkout/checkout.component';
 import { setCurrentUser } from "./store/user/user.action";
-import { setCategoriesMap } from "./store/categories/categories.action";
 
 const App = ()=> {
   const dispatch = useDispatch();
@@ -23,13 +22,6 @@ const App = ()=> {
     return unsubscribe
 },[]);
 
-useEffect(() => {
-  const getCategoriesMAP = async () => {
-    const categoryMap = await getCategoriesAndDocuments();
-    dispatch(setCategoriesMap(categoryMap)); // Set state after fetching data
-  };
-  getCategoriesMAP();
-}, []);
   return (
   <Routes>
   <Route path='/' element={<Navigation/>} >

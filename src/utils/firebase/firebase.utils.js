@@ -104,47 +104,42 @@ export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => 
 
                                                                                           // This function retrieves categories and their associated items from a Firestore collection,
                                                                                           // potentially for populating your React application's UI or managing data.
-
 export const getCategoriesAndDocuments = async () => {
-                                                                                          // 1. Target the Firestore Collection:
-                                                                                        //    - Create a reference to the "categories" collection within your Firestore database.
-    const collectionRef = collection(db, 'categories');
+ // 1. Target the Firestore Collection:
+const collectionRef = collection(db, 'categories');
+                                                                                        
+// 2. Construct a Firestore Query (Optional):
+const q = query(collectionRef);
+                                                                                        
+ // 3. Retrieve Data from Firestore:
+ const querySnapshot = await getDocs(q);
+                                                                                        
+// 4. Process and Structure the Data:
+return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
+};
 
-                                                                                        // 2. Construct a Firestore Query (Optional):
-                                                                                        //    - Create a query object using query(collectionRef). This is currently an empty query,
-                                                                                        //    - but you could add conditions or sorting options here if needed.
-  const q = query(collectionRef);
+  // const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+  //                                                                                     //    - Inside the reduce callback function:
+  //                                                                                     //      - Extract the "title" and "items" fields from the current document's data.
+  //   const { title, items } = docSnapshot.data();
 
-                                                                                        // 3. Retrieve Data from Firestore:
-                                                                                        //    - Asynchronously get all documents matching the query using getDocs(q).
-                                                                                        //    - This fetches the category data from your Firestore database.
-  const querySnapshot = await getDocs(q);
+  //                                                                                   //      - Create a lowercase version of the title for potential case-insensitive handling.
+  //   const lowerCaseTitle = title.toLowerCase();
 
-                                                                                      // 4. Process and Structure the Data:
-                                                                                      //    - Use reduce() on the querySnapshot.docs array to efficiently iterate through
-                                                                                      //    - each document (category) and transform it into a more usable structure.
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-                                                                                      //    - Inside the reduce callback function:
-                                                                                      //      - Extract the "title" and "items" fields from the current document's data.
-    const { title, items } = docSnapshot.data();
+  //                                                                                     //      - Add the "items" array associated with the category title to the accumulator (`acc`).
+  //                                                                                     //      - The accumulator (`acc`) is essentially building a new object where keys are
+  //                                                                                     //      - lowercase titles and values are the corresponding items arrays.
+  //   acc[lowerCaseTitle] = items;
 
-                                                                                    //      - Create a lowercase version of the title for potential case-insensitive handling.
-    const lowerCaseTitle = title.toLowerCase();
-
-                                                                                      //      - Add the "items" array associated with the category title to the accumulator (`acc`).
-                                                                                      //      - The accumulator (`acc`) is essentially building a new object where keys are
-                                                                                      //      - lowercase titles and values are the corresponding items arrays.
-    acc[lowerCaseTitle] = items;
-
-                                                                                        //      - Return the updated accumulator to be used in the next iteration of reduce().
-    return acc;
-  }, {});
+  //                                                                                       //      - Return the updated accumulator to be used in the next iteration of reduce().
+  //   return acc;
+  // }, {});
 
                                                                                                 // 5. Return the Processed Data:
                                                                                                 //    - After processing all categories, return the final `categoryMap` object.
                                                                                                 //    - This object has category titles (lowercase) as keys and their corresponding items arrays as values.
-  return categoryMap;
-};
+  // return categoryMap;
+
 
 
 export const createUserDocumentFromAuth = async (userAuth,
