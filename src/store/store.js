@@ -5,6 +5,7 @@ import { rootReducer } from './root-reducer';
 
 const middlewares = [logger];
 
+
 const composedEnhancers = compose(applyMiddleware(...middlewares))
 
 
