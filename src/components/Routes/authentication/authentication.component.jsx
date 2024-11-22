@@ -11,7 +11,7 @@ import './authentication.styles.scss'
 import SignUpForm from '../../sign-up-form/sign_up_form.component'
 import SignInForm from '../../sign-in-form/sign_in_form.component';
 const Authentication = () =>{
-    // useEffect(()=>{
+// useEffect(()=>{
 // const toUseEffectAsynchronously =    async () =>{// run useEffect when the SignIn component is Mounted
 //    const response = await getRedirectResult(auth);
 //    if(response){
@@ -20,19 +20,13 @@ const Authentication = () =>{
 //     } 
 //     toUseEffectAsynchronously();
 // }, []); // passing an empty array means run useEffect once, only hwen the signin component is mouned in the DOM.
-
-   
-
     return(
         <div className='authentication-container'>
             
             {/* <button onClick={logGoogleUser}>Sign In with google pop up</button> */}
             {/* <button onClick={signInWithGoogleRedirect}>Sign In with google redirect</button> */}
-            
             <SignInForm/>
             <SignUpForm/>
-            
-            
         </div>
     )
 }
