@@ -1,19 +1,20 @@
 
-import { Fragment, useContext } from 'react';
+import { Fragment } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { ReactComponent as TrendLogo } from '../../../assets/trend-up-svgrepo-com.svg';
 import CartIcon from '../../cart-icon/cart-icon.component';
 import CartDropdown from '../../cart-dropdown/cart-dropdown.component';
 import { selectCurrentUser} from '../../../store/user/user.selector';
-import { CartContext } from '../../../contexts/cart.context';
+import { selectIsCartOpen } from '../../../store/cart/cart.selector';
 import { NavigationContainer, NavLinks, NavLink, LogoContainer } from './navigation.styles';
 import { signOutUser } from '../../../utils/firebase/firebase.utils'
 // Define the Navigation functional component
 const Navigation = () => {
 
 const currentUser = useSelector(selectCurrentUser);
-  const {isCartOpen} = useContext(CartContext)
+const isCartOpen = useSelector(selectIsCartOpen);
+
   return (
     <Fragment>
       <NavigationContainer>
