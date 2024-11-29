@@ -1,12 +1,36 @@
-import {compose, createStore , applyMiddleware} from 'redux';
+
+import { compose, createStore, applyMiddleware } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
+
 import { rootReducer } from './root-reducer';
-// i used configure store instead of createStore becauase that last one is deprecated
 
-const middlewares = [logger];
+// import { loggerMiddleware } from './middleware/logger';
 
+const middleWares = [process.env.NODE_ENV !=='production' && logger].filter(
+    Boolean
+); // a great way to avoid logger from appearing on production, i have chosed !== production instead of development because this is the safest option (in case i wanted to have other environments)
 
-const composedEnhancers = compose(applyMiddleware(...middlewares))
+const composedEnhancer = 
+(process.env.NODE_ENV !== 'production' &&
+    window && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+    compose;
 
+const persistConfig = {
+  key: 'root',
+  storage,
+  blacklist: ['user'],
+};
 
-export const store = createStore(rootReducer, undefined, composedEnhancers);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const composedEnhancers = composedEnhancer(applyMiddleware(...middleWares));
+
+export const store = createStore(
+  persistedReducer,
+  undefined,
+  composedEnhancers
+);
+
+export const persistor = persistStore(store);
