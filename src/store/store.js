@@ -3,14 +3,16 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
+import { thunk } from 'redux-thunk';
 
 import { rootReducer } from './root-reducer';
 
 // import { loggerMiddleware } from './middleware/logger';
 
-const middleWares = [process.env.NODE_ENV !=='production' && logger].filter(
-    Boolean
-); // a great way to avoid logger from appearing on production, i have chosed !== production instead of development because this is the safest option (in case i wanted to have other environments)
+const middleWares = [
+    process.env.NODE_ENV !=='production' && logger,
+    thunk,
+].filter(Boolean); // a great way to avoid logger from appearing on production, i have chosed !== production instead of development because this is the safest option (in case i wanted to have other environments)
 
 const composedEnhancer = 
 (process.env.NODE_ENV !== 'production' &&
@@ -20,7 +22,7 @@ const composedEnhancer =
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['user'],
+  whitelist: ['cart'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
