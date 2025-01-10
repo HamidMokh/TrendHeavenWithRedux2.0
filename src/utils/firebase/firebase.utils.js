@@ -142,9 +142,10 @@ return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 
 
 
-export const createUserDocumentFromAuth = async (userAuth,
-      additionalInformation ={}                                                                 //// >>>>>> note that this is nested and assigned an empty object value as default inside createUserDocumentFromAuth it is perfectly valid for js to initiate an object that you are passing as an argument inside of a function 
-      ) =>{
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  additionalInformation ={}                                                                 //// >>>>>> note that this is nested and assigned an empty object value as default inside createUserDocumentFromAuth it is perfectly valid for js to initiate an object that you are passing as an argument inside of a function 
+) =>{
           const userDocRef = doc(db, 'users', userAuth.uid);
 
           // console.log(userDocRef);
@@ -176,7 +177,7 @@ export const createUserDocumentFromAuth = async (userAuth,
 
           }
 
-          return userDocRef;
+          return userSnapshot;
 
 };
 
@@ -202,3 +203,16 @@ export const signInAuthUserWithEmailAndPassword = async (email, password)=>{
 
 
  export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth , callback);
+
+ export const getCurrentUser = ()=> {
+  return new Promise((resolve, reject)=>{
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) =>{
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  })
+ }
