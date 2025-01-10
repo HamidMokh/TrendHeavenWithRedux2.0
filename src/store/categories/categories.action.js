@@ -6,7 +6,7 @@ import { createAction } from "../../utils/reducer/reducer.utils";
 export const fetchCategoriesStart = ()=>
     createAction(CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_START);
 
-export const fetchCategoriesSucess = (categoriesArray)=>
+export const fetchCategoriesSuccess = (categoriesArray)=>
     createAction(
         CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_SUCCESS,
         categoriesArray,
